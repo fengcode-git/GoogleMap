@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>4438e343-abdb-40d6-be9f-1d0460edfcce</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FengCode.Asp.Logger" Version="3.1.1" />
+    <PackageReference Include="FengCode.Libs.Ado" Version="2.0.0" />
+    <PackageReference Include="FengCode.Libs.Image" Version="4.0.0" />
+    <PackageReference Include="FengCode.Libs.Mapper" Version="1.0.0" />
+    <PackageReference Include="FengCode.Libs.Utils" Version="2.0.1" />
+    <PackageReference Include="HtmlSanitizer" Version="5.0.355" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.9" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Npgsql" Version="4.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+  </ItemGroup>
+
+</Project>

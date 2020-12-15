@@ -1,0 +1,31 @@
+﻿@model ApiKeyModel
+@{
+    ViewData["Title"] = "ApiKey";
+}
+
+<div class="bg-white d-flex align-items-center justify-content-between">
+    <h5 class="mb-0 ml-2">API KEY</h5>
+    <ol class="breadcrumb mb-0 bg-white align-self-end">
+        <li class="breadcrumb-item">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index">首页</a>
+        </li>
+    </ol>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="card mt-2">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Key" class="control-label"></label>
+                        <input readonly type="text" asp-for="Key" class="form-control" />
+                        <span asp-validation-for="Key" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

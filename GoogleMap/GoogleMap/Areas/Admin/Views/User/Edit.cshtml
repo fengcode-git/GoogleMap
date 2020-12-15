@@ -1,0 +1,50 @@
+﻿@model GoogleMap.Areas.Admin.Models.UserEditModel
+
+@{
+    ViewData["Title"] = "修改用户";
+}
+
+<div class="bg-white d-flex align-items-center justify-content-between">
+    <h5 class="mb-0 ml-2">修改用户</h5>
+    <ol class="breadcrumb mb-0 bg-white align-self-end">
+        <li class="breadcrumb-item">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index">首页</a>
+        </li>
+    </ol>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form method="post" autocomplete="off" asp-action="Edit" id="form">
+                <div class="card mt-2">
+                    <div class="card-header">
+                        修改密码
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <label asp-for="AccountName" class="control-label"></label>
+                            <input readonly asp-for="AccountName" class="form-control" />
+                            <span asp-validation-for="AccountName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RoleType" class="control-label"></label>
+                            <select asp-for="RoleType" asp-items="@Model.SelectListItems" class="form-control"></select>
+                            <span asp-validation-for="RoleType" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsVerify" /> @Html.DisplayNameFor(model => model.IsVerify)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary mr-3" id="btn-save">提 交</button>
+                        <a class="btn btn-secondary" asp-area="Admin" asp-controller="User" asp-action="Index">返回列表</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

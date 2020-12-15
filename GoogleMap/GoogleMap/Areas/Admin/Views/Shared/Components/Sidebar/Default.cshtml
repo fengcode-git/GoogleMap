@@ -1,0 +1,61 @@
+﻿@model SidebarComponentModel
+
+@* sidebar侧边导航栏 *@
+<div class="app-sidebar no-select">
+    @* 导航提示 *@
+    <div class="sidebar-header">导航</div>
+    @* 导航容器 *@
+<ul class="metismenu">
+    @* 带图片的导航按钮 *@
+    <li>
+        <a asp-area="Admin" asp-controller="Marker" asp-action="Index">
+            <span class="fa  fa-tags mr-2"></span>
+            <span>地图标记管理</span>
+        </a>
+    </li>
+    <li>
+        <a asp-area="Admin" asp-controller="Home" asp-action="ModifyPassword">
+            <span class="fa  fa-user mr-2"></span>
+            <span>修改密码</span>
+        </a>
+    </li>
+
+    @if (Model.PersonView.IsVerify)
+    {
+        <li>
+            <a asp-area="Admin" asp-controller="Home" asp-action="ApiKey">
+                <span class="fa fa-key mr-2"></span>
+                <span>API Key</span>
+            </a>
+        </li>
+    }
+
+    @if (Model.PersonView.RoleType == GoogleMap.Libs.Enums.RoleType.Admin)
+    {
+        <li>
+            <a asp-area="Admin" asp-controller="User" asp-action="Index">
+                <span class="fa fa-id-card-o mr-2"></span>
+                <span>用户管理</span>
+            </a>
+        </li>
+        <li>
+            <a asp-area="Admin" asp-controller="Config" asp-action="SiteConfig">
+                <span class="fa fa-code-fork  mr-2" aria-hidden="true"></span>
+                <span>网站配置</span>
+            </a>
+        </li>
+        <li>
+            <a asp-area="Admin" asp-controller="Config" asp-action="OGConfig">
+                <span class="fa fa-twitter  mr-2" aria-hidden="true"></span>
+                <span>OG协议配置</span>
+            </a>
+        </li>
+        <li>
+            <a asp-area="Admin" asp-controller="Invite" asp-action="Index">
+                <span class="fa fa-code-fork  mr-2" aria-hidden="true"></span>
+                <span>邀请设置</span>
+            </a>
+        </li>
+    }
+</ul>
+</div>

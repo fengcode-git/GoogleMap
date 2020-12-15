@@ -1,0 +1,58 @@
+﻿@model TopNavbarComponentModel
+@using GoogleMap.Libs.Enums
+
+
+<div class="bg-blue sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand navbar-dark">
+            <a class="navbar-brand mr-2" href="/">@Model.SiteName</a>
+            <div class="form-inline  ml-auto">
+                <input class="form-control" type="search" placeholder="搜索" id="map-search"/>
+            </div>
+            
+            <ul class="navbar-nav ml-2 d-none d-md-flex">
+                @if (Model.PersonView != null)
+                {
+                    <li class="nav-item">
+                        <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="nav-link">
+                            <i class="fa fa-tachometer ml-1" aria-hidden="true"></i>
+                            <span class="mr-1">后台管理</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link signout" href="#">
+                            <i class="fa fa-sign-out mr-1"></i>
+                            <span class="ml-1">退出</span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Login">
+                            <i class="fa fa-sign-in ml-1"></i>
+                            <span class="ml-1">登录</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Register">
+                            <i class="fa fa-user-plus ml-1"></i>
+                            <span class="ml-1">注册</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(".signout").click(function () {
+            DialogHelper.showConfirmDialog("将退出登录，确认吗？", function () {
+                window.location.href = "/account/logout";
+            });
+            return false;
+        });
+    });
+</script>

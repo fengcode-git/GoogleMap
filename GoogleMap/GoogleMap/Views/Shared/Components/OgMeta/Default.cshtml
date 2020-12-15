@@ -1,0 +1,22 @@
+﻿@model GoogleMap.Libs.Setting.OGConfig
+<meta property="og:type" content="website" />
+@if (!string.IsNullOrWhiteSpace(Model.Title))
+{
+    <meta property="og:title" content="@Model.Title" />
+}
+@if (!string.IsNullOrWhiteSpace(Model.Url))
+{
+    <meta property="og:url" content="@Model.Url" />
+}
+@if (!string.IsNullOrWhiteSpace(Model.SiteName))
+{
+    <meta property="og:site_name" content="@Model.SiteName" />
+}
+@if (!string.IsNullOrWhiteSpace(Model.Description))
+{
+    <meta property="og:description" content="@Model.Description" />
+}
+@if (!string.IsNullOrWhiteSpace(Model.Image))
+{
+    <meta property="og:image" content="@Model.Image" />
+}

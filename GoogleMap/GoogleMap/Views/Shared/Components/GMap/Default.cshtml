@@ -1,0 +1,84 @@
+﻿@model MapModel
+
+<div id="googleMap" style="flex: 1;"></div>
+
+<script>
+    let icons = [
+        'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+        'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+    ];
+    function createMarker(map, lat, lng, title, address, explain,icon) {
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat, lng),
+                map: map,
+                title: title,
+                icon: {
+                    url: icons[icon]
+                }
+            });
+            let html = `
+                    <div>
+                        <div id="siteNotice"></div>
+                        <p class="firstHeading">${title}</p>
+                        <div id="bodyContent">
+                            <p>${explain}</p>
+                            <p>${address}</p>
+                        </div>
+                    </div>`;
+            marker.info = new google.maps.InfoWindow({
+                content: html
+            });
+            google.maps.event.addListener(marker, 'click', function () {
+                marker.info.open(map, marker);
+            });
+            return marker;
+    }
+    $(function () {
+        $("#site-content").addClass("d-flex");
+        let input = document.getElementById("map-search");
+        $(input).submit(function (e) {
+            e.preventDefault();
+        })
+        var mapProp = {
+            center: new google.maps.LatLng(34.2596292, 108.687026),
+            zoom: @(Model.SiteConfig.DefaultZoom),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+         @foreach (var item in Model.MarkerViews)
+        {
+            if (item.RoleType == GoogleMap.Libs.Enums.RoleType.Admin || item.RoleType == GoogleMap.Libs.Enums.RoleType.Member)
+            {
+                 @: createMarker(map,@(item.Lat),@(item.Lng), '@(item.Title)', '@(item.Address)','@(item.Explain)',1);
+            }
+            else
+            {
+                 @: createMarker(map,@(item.Lat),@(item.Lng), '@(item.Title)', '@(item.Address)','@(item.Explain)',0);
+            }
+        }
+        
+        const searchBox = new google.maps.places.SearchBox(input);
+        map.addListener("bounds_changed", () => {
+            searchBox.setBounds(map.getBounds());
+        });
+        searchBox.addListener("places_changed", () => {
+            const places = searchBox.getPlaces();
+            if (places.length == 0) {
+                return;
+            }
+            const bounds = new google.maps.LatLngBounds();
+            places.forEach((place) => {
+                if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                }
+                if (place.geometry.viewport) {
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+            });
+            map.fitBounds(bounds);
+        });
+    })
+</script>

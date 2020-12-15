@@ -1,0 +1,107 @@
+﻿@model UserIndexModel
+
+@{
+    ViewData["Title"] = "用户管理";
+}
+
+<div class="bg-white d-flex align-items-center justify-content-between">
+    <h5 class="mb-0 ml-2">用户管理</h5>
+    <ol class="breadcrumb mb-0 bg-white align-self-end">
+        <li class="breadcrumb-item">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index">首页</a>
+        </li>
+    </ol>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form method="get" asp-area="Admin" asp-controller="User" asp-action="Index">
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                <div class="input-group">
+                                    <input type="text" asp-for="Search" class="form-control" />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-info" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive mt-2">
+                <table class="table table-hover table-bordered bg-white table-nowrap">
+                    <thead>
+                        <tr>
+                            <th scope="col">账号名称</th>
+                            <th scope="col">API Key</th>
+                            <th scope="col">角色名称</th>
+                            <th scope="col">是否验证</th>
+                            <th scope="col">注册时间</th>
+                            <th scope="col">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        @if (this.Model.PagingResult.Data.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="8">
+                                    <div class="p-2 text-center">暂无数据</div>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.PagingResult.Data)
+                            {
+                                <tr id="@item.Id">
+                                    <td>@item.AccountName</td>
+                                    <td>@item.ApiKey</td>
+                                    <td>@item.RoleName</td>
+                                    <td>@(item.IsVerify ? "是":"否")</td>
+                                    <td>@item.CreateTime</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-warning mr-2" asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-id="@item.Id">修改</a>
+                                        <button class="btn btn-danger btn-sm btn-delete">删除</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <vc:bootstrap-pager for-page-size="@Model.PagingResult.PageSize" for-row-count="@Model.PagingResult.RowCount"></vc:bootstrap-pager>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $(".btn-delete").click(function () {
+            let $self = $(this);
+            let $parent = $self.closest("tr");
+            let id = $parent.attr("id");
+            DialogHelper.showConfirmDialog("将删除该用户，同时将删除该用户的所有地图标记，确实操作吗?", function () {
+                let formData = new FormData();
+                formData.append("id", id);
+                AjaxHelper.postFormData('@Url.Action("Delete")', formData).done(function (result) {
+                    if (result.Success) {
+                        $parent.remove();
+                        DialogHelper.showToastSuccess("操作成功");
+                    } else {
+                        DialogHelper.showErrorDialog(result.Message);
+                    }
+                })
+            })
+            return false;
+        })
+    })
+</script>

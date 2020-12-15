@@ -1,0 +1,10 @@
+﻿@model HomeIndexModel
+@{
+    ViewData["Title"] = "首页";
+}
+
+<vc:g-map></vc:g-map>
+
+@section js{
+    <script src="https://maps.googleapis.com/maps/api/js?key=@(Model.SiteConfig.GoogleKey)&libraries=places"></script>
+}

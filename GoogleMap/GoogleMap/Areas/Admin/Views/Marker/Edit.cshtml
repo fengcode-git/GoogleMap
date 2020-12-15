@@ -1,0 +1,31 @@
+﻿@model MarkerEditModel
+@{
+    ViewData["Title"] = "编辑标记";
+}
+
+<div class="bg-white d-flex align-items-center justify-content-between">
+    <h5 class="mb-0 ml-2">编辑地图标记</h5>
+    <ol class="breadcrumb mb-0 bg-white align-self-end">
+        <li class="breadcrumb-item">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index">首页</a>
+        </li>
+    </ol>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form asp-action="Edit" method="post" autocomplete="off">
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <partial name="_form" for="@Model" />
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary mr-3">提交</button>
+                        <a asp-action="Index" class="btn btn-secondary">返回列表</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
